@@ -1,4 +1,4 @@
-/*! JpegCamera 1.3.3 | 2016-09-18
+/*! JpegCamera 1.3.4 | 2017-07-14
     (c) 2013 Adam Wrobel
     https://amw.github.io/jpeg_camera */
 (function() {
@@ -294,7 +294,9 @@
         this.container.appendChild(this.video_container);
         this.video = document.createElement('video');
         this.video.autoplay = true;
-        JpegCamera._add_prefixed_style(this.video, "transform", "scalex(-1.0)");
+        if (this.options.mirror) {
+          JpegCamera._add_prefixed_style(this.video, "transform", "scalex(-1.0)");
+        }
         if (window.AudioContext) {
           if (can_play(vorbis_audio)) {
             this._load_shutter_sound(this.options.shutter_ogg_url);
@@ -385,7 +387,9 @@
         this.displayed_canvas.style.left = 0;
         this.displayed_canvas.style.position = "absolute";
         this.displayed_canvas.style.zIndex = 2;
-        JpegCamera._add_prefixed_style(this.displayed_canvas, "transform", "scalex(-1.0)");
+        if (snapshot._mirror) {
+          JpegCamera._add_prefixed_style(this.displayed_canvas, "transform", "scalex(-1.0)");
+        }
         return this.container.appendChild(this.displayed_canvas);
       };
 
@@ -819,7 +823,9 @@
       that = this;
       setTimeout(function() {
         that._extra_canvas || (that._extra_canvas = that.camera._engine_get_canvas(that));
-        JpegCamera._add_prefixed_style(that._extra_canvas, "transform", "scalex(-1.0)");
+        if (that._mirror) {
+          JpegCamera._add_prefixed_style(that._extra_canvas, "transform", "scalex(-1.0)");
+        }
         return callback.call(that, that._extra_canvas);
       }, 1);
       return true;

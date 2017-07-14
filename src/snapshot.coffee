@@ -97,8 +97,9 @@ class Snapshot
     setTimeout ->
         that._extra_canvas ||= that.camera._engine_get_canvas that
 
-        JpegCamera._add_prefixed_style that._extra_canvas,
-          "transform", "scalex(-1.0)"
+        if that._mirror
+          JpegCamera._add_prefixed_style that._extra_canvas,
+            "transform", "scalex(-1.0)"
 
         callback.call that, that._extra_canvas
       , 1
